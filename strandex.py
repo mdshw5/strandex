@@ -1,41 +1,47 @@
 import os.path
-from six.moves import range
 import re
 import sys
 import argparse
+import random
+from six.moves import range
 
-pattern = re.compile(r'@.+[\n\r]+.+[\n\r]+\+.+[\n\r].+[\n\r]')
+pattern = re.compile(r'(@.+)[\n\r]+.+[\n\r]+\+.*?[\n\r].+[\n\r]')
 
 def run(args):
+
     file_size = os.path.getsize(args.fastq.name)
+    random.seed(args.seed)
+    n = 0
+    ahead = 4096
     step = file_size // args.nreads
-    assert step > 0
-    last_record = ''
-    for i in range(0, file_size, step):
+    if step < 1:
+        step = 1
+    idx = iter(range(0, file_size, step))
+    while n < args.nreads:
+        i = next(idx)
         match = None
-        ahead = 4000
         while not match:
             args.fastq.seek(i)
             if i + ahead > file_size:
-                break
+                i = random.randrange(file_size)
             else:
                 chunk = args.fastq.read(ahead)
             match = re.search(pattern, chunk)
             if match:
-                start, end = match.span()
-                record = chunk[start:end]
-                if record != last_record:
-                    sys.stdout.write(record)
-                last_record = record
+                a, b = match.span()
+                ahead = int((ahead + (b - a) * 4) / 2)
+                sys.stdout.write(match.group(0))
+                n += 1
             else:
                 ahead += ahead
     args.fastq.close()
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='strandex', description="sample an approximate number of reads from a fastq file without reading the entire file")
+    parser = argparse.ArgumentParser(prog='strandex', description="sample uniformly without reading an entire fastq file")
     parser.add_argument('fastq', type=argparse.FileType('r'), help="input fastq file")
-    parser.add_argument('-n', '--nreads', type=int, default=2000000, help='approximate number of reads to sample from input (default: %(default)s)')
+    parser.add_argument('-n', '--nreads', type=int, default=1, help='number of reads to sample from input (default: %(default)s)')
+    parser.add_argument('-s', '--seed', type=float, default=random.random(), help='seed for random number generator (default: None)')
     args = parser.parse_args()
     run(args)
 
