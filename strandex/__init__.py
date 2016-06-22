@@ -3,11 +3,9 @@ import re
 import sys
 import argparse
 import random
-import fastq
 from six.moves import range
 
-
-__version__ = "0.1"
+__version__ = "0.2"
 
 class FastqSampler:
     pattern = re.compile(r'@.+[\n\r]+.+[\n\r]+\+.*?[\n\r].+[\n\r]')
