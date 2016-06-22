@@ -50,6 +50,9 @@ class FastqSampler:
                 else:
                     self.read_ahead += self.read_ahead
 
+    def __next__(self):
+        return iter(self).next()
+
 def run(args):
     sampler = FastqSampler(args.fastq1, args.fastq2, args.nreads, args.seed)
     for read1, read2 in sampler:
