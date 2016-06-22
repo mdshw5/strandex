@@ -53,12 +53,13 @@ class TestStrandex(TestCase):
         from strandex import FastqSampler
         from strandex.fastq import Reader
         sampler = FastqSampler(self.fastq1, fastq2=self.fastq2, nreads=100000, seed=42)
-        with Reader(self.fastq1) as fq1, Reader(self.fastq2) as fq2:
-            for (sample1, sample2), read1, read2 in zip(sampler, fq1, fq2):
-                print(sample1)
-                print(read1)
-                assert sample1 == str(read1)
-                assert sample2 == str(read2)
+        with Reader(self.fastq1) as fq1:
+            with Reader(self.fastq2) as fq2:
+                for (sample1, sample2), read1, read2 in zip(sampler, fq1, fq2):
+                    print(sample1)
+                    print(read1)
+                    assert sample1 == str(read1)
+                    assert sample2 == str(read2)
 
     def test_sampler_no_oversample(self):
         from strandex import FastqSampler
