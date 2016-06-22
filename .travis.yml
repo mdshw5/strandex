@@ -1,23 +1,23 @@
 language: python
 sudo: false
 python:
-    - 'nightly'
-    - '3.5'
-    - '3.4'
-    - '3.3'
-    - '3.2'
-    - '2.7'
-    - '2.6'
-    - pypy
-    - pypy3
+- nightly
+- '3.5'
+- '3.4'
+- '3.3'
+- '3.2'
+- '2.7'
+- '2.6'
+- pypy
+- pypy3
 install:
-    - python setup.py install
+- python setup.py install
 script: nosetests --with-coverage --cover-package=strandex
 deploy:
   provider: pypi
   user: mdshw5
   password:
-    secure: MbSaeuitkVTZqxa0PJ3RcR1aMf+B/sMbcx2sWOo9xfLlRFDFpYWJZ0EfXWEhrVu2YWXpBsasgunTDWSi0jNcZMH92MzOC+UTVYr45LO5sy6hm4iSiAgm/DPgYWdjP0SFKr7eL/HWPS+gHvgkXL1upleX21O358bxaezoasuKFvs=
+    secure: Ne8yyTG5HWATkgFSjJQQm3TQ1CSkZMgsZD5wV2KYt+S4SQEodIz+yOLwIJLaqCPzi2RM5QQPFoIAIFJl6R/KWU92vMCO+ObR06aGhOx4XcHCwI2+uSp+CC7cGMwjaEd4Q9ITpJlmguLVKV1Yz6nx8K/mnRgXHgkaqnRNSEehV12RTZGmdMELzpc/hhq7z7guci8oLgqYNnKVUWKd9TvRvyZT6Fxx3CLmfiDZCcnL6D9h4T8EWyG5cwKtNEScw1iNm/w+InFJEYH2gkDsvFkPsl6nllmp28gY7ikXU42rpRLVMN/vmDJ4324G1Qw02lnchUYMdGAWSjkv4rgb7ccjIlwnsiZ1oJFFZz7fUG25ESt5rahgJ+LsvxjF0k//K86ehvbY7CQuXadB0j5mTMT1Zh8cilu4ZUKbDDkDdl9Dj0COPNfsXUHm93IsKUP2DLGYOWmhClS5aUeD0/D/F6KgmaTSKTwpkAfnodtSdvj9QptogrJj+4eXlcEPZLYCgeUn5m3M2mZ7/L+SKZMEAAFuZEtbmgzdZhl+m4YC1zz4uQkrQuQC9ZHJbisfYZuS7k2aFhuBGWJEd9+xKmCtfF6Hzwn133B/TTCghtWfJBduGaoLXB9Ya0gkmh8lQPEKINkpNNmopvYw3Ir5JCPyQ+qcXs8/5bvXWqngyYl0yjWJon0=
   on:
     all_branches: true
     python: 2.6
@@ -25,6 +25,6 @@ deploy:
     repo: mdshw5/strandex
 matrix:
   allow_failures:
-    - python: 'nightly'
+  - python: nightly
 after_success:
-    - coveralls
+- coveralls
