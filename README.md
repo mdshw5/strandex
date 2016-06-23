@@ -4,7 +4,8 @@
 [![Build Status](https://travis-ci.org/mdshw5/strandex.svg?branch=master)](https://travis-ci.org/mdshw5/strandex)
 [![PyPI](https://img.shields.io/pypi/v/strandex.svg?branch=master)](https://pypi.python.org/pypi/strandex)
 [![Landscape](https://landscape.io/github/mdshw5/strandex/master/landscape.svg)](https://landscape.io/github/mdshw5/strandex/master)
-[![Coveralls](https://coveralls.io/repos/mdshw5/strandex/badge.svg?branch=master)](https://coveralls.io/r/mdshw5/strandex?branch=master)
+[![codecov](https://codecov.io/gh/mdshw5/strandex/branch/master/graph/badge.svg)](https://codecov.io/gh/mdshw5/strandex)
+
 
 ##Why use this?
 - You want only a few reads from a large FASTQ file (**downsampling**)
