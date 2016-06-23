@@ -8,8 +8,8 @@ class TestStrandex(TestCase):
     @classmethod
     def setUpClass(self):
         """ Downloading test data """
-        check_call('curl -s http://ftp.sra.ebi.ac.uk/vol1/fastq/ERR239/ERR239653/ERR239653_1.fastq.gz | gzip -dcq | head -n 400000 > test1.fastq', shell=True)
-        check_call('curl -s http://ftp.sra.ebi.ac.uk/vol1/fastq/ERR239/ERR239653/ERR239653_2.fastq.gz | gzip -dcq | head -n 400000 > test2.fastq', shell=True)
+        check_call('curl -s http://ftp.sra.ebi.ac.uk/vol1/fastq/ERR239/ERR239653/ERR239653_1.fastq.gz | gzip -dcq 2> /dev/null | head -n 400000 > test1.fastq', shell=True)
+        check_call('curl -s http://ftp.sra.ebi.ac.uk/vol1/fastq/ERR239/ERR239653/ERR239653_2.fastq.gz | gzip -dcq 2> /dev/null | head -n 400000 > test2.fastq', shell=True)
         self.fastq1 = 'test1.fastq'
         self.fastq2 = 'test2.fastq'
 
