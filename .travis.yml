@@ -27,4 +27,4 @@ matrix:
   allow_failures:
   - python: nightly
 after_success:
-- coveralls
+- bash <(curl -s https://codecov.io/bash)
