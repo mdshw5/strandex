@@ -53,6 +53,14 @@ class FastqSampler:
     def __next__(self):
         return iter(self).next()
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.fastq1.close()
+        if self.fastq2 is not None:
+            self.fastq2.close()
+
 def run(args):
     sampler = FastqSampler(args.fastq1, args.fastq2, args.nreads, args.seed)
     for read1, read2 in sampler:
