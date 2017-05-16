@@ -13,8 +13,8 @@
 - You want to avoid sampling only the beginning or end of the file
 - You want to expand a small FASTQ file to a specific number of reads (**upsampling**)
 
-##Caveats
-- For paired-end sampleing, reads in both files must be in the same order and have the same length
+## Caveats
+- For paired-end sampling, reads in both files must be in the same order and have the same length
 - For sampling `n` reads approximately equal to the total available, sampling with replacement may occur
 
 # Install
