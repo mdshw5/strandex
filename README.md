@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/mdshw5/strandex/branch/master/graph/badge.svg)](https://codecov.io/gh/mdshw5/strandex)
 
 
-##Why use this?
+## Why use this?
 - You want only a few reads from a large FASTQ file (**downsampling**)
 - You are constrained by I/O so that reading through the entire file is very slow
 - You want to avoid sampling only the beginning or end of the file
