@@ -64,9 +64,12 @@ class FastqSampler:
 def run(args):
     sampler = FastqSampler(args.fastq1, args.fastq2, args.nreads, args.seed)
     for read1, read2 in sampler:
-        args.out.write(read1)
+        assert len(read1) == len(read2)
+        if args.trim:
+            assert len(read1) >= args.trim
+        args.out.write(read1[:args.trim])
         if read2 is not None:
-            args.out2.write(read2)
+            args.out2.write(read2[:args.trim])
 
 
 def main():
@@ -75,8 +78,9 @@ def main():
     parser.add_argument('out', type=argparse.FileType('w'), help="output fastq file")
     parser.add_argument('-fq2', '--fastq2', type=str, help="input fastq file read pairs")
     parser.add_argument('-o2', '--out2', type=argparse.FileType('w'), help="output fastq file read pairs")
-    parser.add_argument('-n', '--nreads', type=int, default=1, help='number of reads to sample from input (default: %(default)s)')
+    parser.add_argument('-n', '--nreads', type=int, default=1, help='sample -n reads from input files (default: %(default)s)')
     parser.add_argument('-s', '--seed', type=float, default=random.random(), help='seed for random number generator (default: random)')
+    parser.add_argument('-t', '--trim', type=int, default=None, help='trim reads to length -t (default: %(default)s)')
     args = parser.parse_args()
     run(args)
 
