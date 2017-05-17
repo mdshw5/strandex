@@ -4,8 +4,48 @@ import sys
 import argparse
 import random
 from six.moves import range
+from six import string_types
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
+
+class Fastq(object):
+    """
+    A class to hold features from fastq reads.
+    """
+    def __init__(self, name='', seq='', strand='+', qual=''):
+        self.name = name
+        self.seq = seq
+        self.strand = strand
+        self.qual = qual
+        self.i = int()
+        assert isinstance(name, string_types)
+        assert isinstance(seq, string_types)
+        assert isinstance(qual, string_types)
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.i < len(self):
+            value, self.i = self[self.i], self.i + 1
+            return value
+        else:
+            raise StopIteration()
+
+    def __getitem__(self, key):
+        return self.__class__(self.name, self.seq[key], self.strand, self.qual[key])
+
+    def __next__(self):
+        return self.next()
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return '\n'.join([self.name, self.seq, self.strand, self.qual]) + '\n'
+
+    def __len__(self):
+        return len(self.seq)
 
 class FastqSampler:
     pattern = re.compile(r'@.+[\n\r]+.+[\n\r]+\+.*?[\n\r].+[\n\r]')
@@ -64,12 +104,14 @@ class FastqSampler:
 def run(args):
     sampler = FastqSampler(args.fastq1, args.fastq2, args.nreads, args.seed)
     for read1, read2 in sampler:
-        assert len(read1) == len(read2)
+        read1 = Fastq(*read1.rstrip().split('\n'))
+        if read2:
+            read2 = Fastq(*read2.rstrip().split('\n'))
         if args.trim:
             assert len(read1) >= args.trim
-        args.out.write(read1[:args.trim])
+        args.out.write(str(read1[:args.trim]))
         if read2 is not None:
-            args.out2.write(read2[:args.trim])
+            args.out2.write(str(read2[:args.trim]))
 
 
 def main():
