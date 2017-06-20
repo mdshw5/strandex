@@ -59,4 +59,5 @@ optional arguments:
   -n NREADS, --nreads NREADS
                         number of reads to sample from input (default: 1)
   -s SEED, --seed SEED  seed for random number generator (default: None)
+  -t TRIM, --trim TRIM  trim reads to length -t (default: None)
 ```
